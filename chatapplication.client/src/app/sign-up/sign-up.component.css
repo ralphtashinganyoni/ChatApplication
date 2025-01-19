@@ -1,0 +1,85 @@
+/* General container styling */
+.sign-up-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    max-width: 400px;
+    margin: 0 auto;
+    background-color: #f1f1f1;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+  
+  /* Header styling */
+  .sign-up-header {
+    text-align: center;
+    color: #075e54;
+    margin-bottom: 20px;
+  }
+  
+  h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  /* Input fields */
+  .input-group {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .input-group label {
+    display: block;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 8px;
+  }
+  
+  .input-group input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    background-color: #ffffff;
+  }
+  
+  .input-group input:focus {
+    outline: none;
+    border-color: #075e54;
+  }
+  
+  /* Button group */
+  .button-group {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .sign-up-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #075e54;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .sign-up-button:hover {
+    background-color: #128c7e;
+  }
+  
+  /* Error message styling */
+  .error-message {
+    margin-top: 20px;
+    color: red;
+    font-size: 14px;
+    text-align: center;
+  }
+  
