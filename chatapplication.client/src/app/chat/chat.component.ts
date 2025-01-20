@@ -2,6 +2,8 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { AuthService } from '../services/auth.service';
 import { ChatService } from '../services/chat.service';
+import { environment } from '../environment';
+import * as signalR from '@microsoft/signalr';
 
 export interface Message {
   id: string;
@@ -69,8 +71,8 @@ export class ChatComponent implements OnInit, OnDestroy {
     });
   
     try {
-      console.log('Invoking LoadMessages with:', this.currentUser, user.userId);
-      await this.hubConnection.invoke('LoadMessages', this.currentUser, user.userId);
+      console.log('Invoking LoadMessages with:', user.userId);
+      await this.hubConnection.invoke('LoadMessages', user.userId);
       console.log('LoadMessages invoked successfully');
     } catch (err) {
       console.error('Error invoking LoadMessages:', err);
@@ -86,10 +88,14 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   private async initializeSignalRConnection() {
-    this.hubConnection = new HubConnectionBuilder()
-    .withUrl('https://localhost:7070/chatHub') // Explicitly specify the backend URL
+    this.hubConnection = new signalR.HubConnectionBuilder()
+    .withUrl(`${environment.apiUrl}/chatHub?userId=${this.currentUser}`, {
+      transport: signalR.HttpTransportType.WebSockets,
+      headers: { 'UserId': this.currentUser }
+    })
     .withAutomaticReconnect()
-      .build();
+    .build();
+  
 
   // Add listeners
   this.setupSignalRListeners();
@@ -146,12 +152,13 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   async sendMessage() {
+    
     if (!this.currentMessage.trim()) return;
     console.log('CurrentUser:', this.currentUser, typeof this.currentUser);
     console.log('SelectedUser:', this.selectedUser, typeof this.selectedUser);
     console.log('CurrentMessage:', this.currentMessage, typeof this.currentMessage);
     try {
-      await this.hubConnection.invoke('SendMessage', this.currentUser, this.selectedUser.userId, this.currentMessage);
+      await this.hubConnection.invoke('SendMessage', this.selectedUser.userId, this.currentMessage);
       this.currentMessage = '';
     } catch (err) {
       console.error('Error sending message:', err);

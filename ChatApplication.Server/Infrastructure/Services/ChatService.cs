@@ -3,39 +3,42 @@
     using ChatApplication.Server.Domain.DTOs.Messages;
     using ChatApplication.Server.Domain.Entities;
     using ChatApplication.Server.Domain.Interfaces;
-    using ChatApplication.Server.Persistence;
-    using Microsoft.EntityFrameworkCore;
+    using Microsoft.AspNetCore.Http;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
+    /// <summary>
+    /// Service for managing chat functionality.
+    /// </summary>
     public class ChatService : IChatService
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IMessageRepository _messageRepository;
+        private readonly IHttpUserContextService _httpUserContextService;
 
-        public ChatService(ApplicationDbContext context)
+        public ChatService(IMessageRepository messageRepository, IHttpUserContextService httpUserContextService)
         {
-            _context = context;
+            _messageRepository = messageRepository;
+            _httpUserContextService = httpUserContextService;
         }
 
+        /// <inheritdoc />
         public async Task<List<MessageDto>> GetConversationAsync(string senderId, string receiverId)
         {
-            return await _context.Messages
-                .Where(m => (m.SenderId == senderId && m.RecipientId == receiverId) ||
-                            (m.SenderId == receiverId && m.RecipientId == senderId))
-                .OrderBy(m => m.SentAt)
-                .Select(m => new MessageDto
-                {
-                    Id = m.Id,
-                    SenderId = m.SenderId,
-                    ReceiverId = m.RecipientId,
-                    Content = m.Content,
-                    Timestamp = m.SentAt
-                })
-                .ToListAsync();
+            var messages = await _messageRepository.GetConversationAsync(senderId, receiverId);
+
+            return messages.Select(m => new MessageDto
+            {
+                Id = m.Id,
+                SenderId = m.SenderId,
+                ReceiverId = m.RecipientId,
+                Content = m.Content,
+                Timestamp = m.SentAt
+            }).ToList();
         }
 
+        /// <inheritdoc />
         public async Task<MessageDto> SaveMessageAsync(string senderId, string receiverId, string content)
         {
             var message = new Message
@@ -46,8 +49,7 @@
                 SentAt = DateTime.UtcNow
             };
 
-            _context.Messages.Add(message);
-            await _context.SaveChangesAsync();
+            await _messageRepository.AddMessageAsync(message);
 
             return new MessageDto
             {

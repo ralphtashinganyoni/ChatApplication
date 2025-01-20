@@ -118,6 +118,7 @@ try
         });
     });
 
+    builder.Services.AddHttpContextAccessor();
 
 
 
