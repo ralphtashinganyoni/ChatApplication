@@ -114,6 +114,23 @@ namespace ChatApplication.Server.Persistence.Repositories
             return (messages, totalCount);
         }
 
+        /// <inheritdoc />
+        public async Task<List<Message>> GetConversationAsync(string senderId, string receiverId)
+        {
+            return await _context.Messages
+                .Where(m => (m.SenderId == senderId && m.RecipientId == receiverId) ||
+                            (m.SenderId == receiverId && m.RecipientId == senderId))
+                .OrderBy(m => m.SentAt)
+                .ToListAsync();
+        }
+
+        /// <inheritdoc />
+        public async Task AddMessageAsync(Message message)
+        {
+            _context.Messages.Add(message);
+            await _context.SaveChangesAsync();
+        }
+
     }
 
 }
