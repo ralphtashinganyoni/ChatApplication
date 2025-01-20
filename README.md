@@ -1,7 +1,7 @@
 # Real-time Chat Application
 
 ## Overview
-This document provides the technical documentation for the real-time chat application designed as part of the Sanlam Studios technical assessment. The application facilitates communication between multiple users with real-time message broadcasting and persistence.
+This document provides the technical documentation for the real-time chat application designed as part of a technical assessment. The application facilitates communication between multiple users with real-time message broadcasting and persistence.
 
 ---
 
@@ -117,11 +117,12 @@ The real-time chat application is built using a .NET Web API backend and a simpl
 - Time constraint 
 
 ### Potential Improvements
-- 
+- Enhance Audit Trail and make efficent
 - Enhance UI with modern design principles and make use of a design systems.
 - Introduce unit and integration tests.
 - Implement rate limiting to prevent message spamming.
 - Introduce a message broker service like Rabbit MQ for resiliency at scale
+- Add other normal chat functionality like online status, media upload, editing and deletion of messages
 
 ---
 
