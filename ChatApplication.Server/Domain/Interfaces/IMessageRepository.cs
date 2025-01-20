@@ -71,6 +71,20 @@ namespace ChatApplication.Server.Domain.Interfaces
         /// <returns>A paged collection of messages for the specified user.</returns>
         Task<(IEnumerable<Message> Messages, int TotalCount)> GetPagedMessagesByUserIdAsync(string userId, int pageNumber, int pageSize);
 
+        /// <summary>
+        /// Retrieves the conversation between two users.
+        /// </summary>
+        /// <param name="senderId">The ID of the sender.</param>
+        /// <param name="receiverId">The ID of the receiver.</param>
+        /// <returns>A list of messages between the two users.</returns>
+        Task<List<Message>> GetConversationAsync(string senderId, string receiverId);
+
+        /// <summary>
+        /// Adds a new message to the database.
+        /// </summary>
+        /// <param name="message">The message entity to add.</param>
+        Task AddMessageAsync(Message message);
+
     }
 
 }

@@ -14,9 +14,6 @@
           </div>
           <div class="user-info">
             <div class="user-name">{{user.userName}}</div>
-            <div class="user-status">
-              {{user.isOnline ? 'Online' : 'Offline'}}
-            </div>
           </div>
         </div>
       </div>
@@ -37,7 +34,6 @@
           <ng-template #emptyHeader>
             <!-- Leave empty if no user is selected -->
           </ng-template>
-          <button class="logout-button" (click)="logout()">Logout</button>
         </div>
       </div>
   
