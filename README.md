@@ -45,12 +45,12 @@ The real-time chat application is built using a .NET Web API backend and a simpl
 1. **Clone the Repository**:
    ```bash
    git clone <repository-url>
-   cd chat-application
+   cd ChatApplication
    ```
 2. **Backend Setup**:
    - Navigate to the backend folder:
      ```bash
-     cd backend
+     cd ChatApplication.Server
      ```
    - Configure the database connection string in `appsettings.json`.
    - Apply migrations:
@@ -85,11 +85,8 @@ The real-time chat application is built using a .NET Web API backend and a simpl
 
 
 ### Data Flow Diagram
-1. User sends a message via the frontend.
-2. Message is sent to the backend via SignalR.
-3. Backend broadcasts the message to all connected clients.
-4. Message is persisted in the PostgreSQL database.
-5. On new client connections, chat history is fetched from the database.
+<img width="437" alt="image" src="https://github.com/user-attachments/assets/b053a7f2-1ceb-4485-b47b-a133173b98c4" />
+
 
 ### Database Schema Diagram
 <img width="290" alt="image" src="https://github.com/user-attachments/assets/7d46625f-7c53-4105-94bd-bca2939a431a" />
@@ -113,20 +110,18 @@ The real-time chat application is built using a .NET Web API backend and a simpl
 
 ## Known Limitations and Future Improvements
 ### Limitations
-- No user authentication beyond anonymous sessions.
+- No comprehensive user authentication functionality.
 - Basic UI design.
 - Limited error handling.
+- Signlar basic implementation which will likely no scale very well
+- Time constraint 
 
 ### Potential Improvements
-- Add user authentication and profiles.
-- Enhance UI with modern design principles.
+- 
+- Enhance UI with modern design principles and make use of a design systems.
 - Introduce unit and integration tests.
 - Implement rate limiting to prevent message spamming.
-
----
-
-## Deployment Considerations
-
+- Introduce a message broker service like Rabbit MQ for resiliency at scale
 
 ---
 
